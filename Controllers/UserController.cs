@@ -1,9 +1,11 @@
 using System.Data.Common;
 using Microsoft.AspNetCore.Mvc;
 using WebTest.Connector;
+using WebTest.Models;
+
 
 namespace WebTest.Controller {
-    [route("/users")]
+    [Route("/users")]
     [ApiController]
     public class UsersController : ControllerBase {
         

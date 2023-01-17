@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.21.12" />
     <PackageReference Include="MySql.Data" Version="8.0.32" />
     <PackageReference Include="MySql.Web" Version="8.0.32" />
   </ItemGroup>
