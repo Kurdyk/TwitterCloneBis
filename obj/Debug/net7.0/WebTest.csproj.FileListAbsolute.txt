@@ -1,0 +1,8 @@
+/home/louis/Desktop/Personal/Personnal_projects/C#_project/HelloWorld/TwitterCloneBis/obj/Debug/net7.0/WebTest.csproj.AssemblyReference.cache
+/home/louis/Desktop/Personal/Personnal_projects/C#_project/HelloWorld/TwitterCloneBis/obj/Debug/net7.0/WebTest.GeneratedMSBuildEditorConfig.editorconfig
+/home/louis/Desktop/Personal/Personnal_projects/C#_project/HelloWorld/TwitterCloneBis/obj/Debug/net7.0/WebTest.AssemblyInfoInputs.cache
+/home/louis/Desktop/Personal/Personnal_projects/C#_project/HelloWorld/TwitterCloneBis/obj/Debug/net7.0/WebTest.AssemblyInfo.cs
+/home/louis/Desktop/Personal/Personnal_projects/C#_project/HelloWorld/TwitterCloneBis/obj/Debug/net7.0/WebTest.csproj.CoreCompileInputs.cache
+/home/louis/Desktop/Personal/Personnal_projects/C#_project/HelloWorld/TwitterCloneBis/obj/Debug/net7.0/WebTest.MvcApplicationPartsAssemblyInfo.cache
+/home/louis/Desktop/Personal/Personnal_projects/C#_project/HelloWorld/TwitterCloneBis/obj/Debug/net7.0/WebTest.RazorAssemblyInfo.cache
+/home/louis/Desktop/Personal/Personnal_projects/C#_project/HelloWorld/TwitterCloneBis/obj/Debug/net7.0/WebTest.RazorAssemblyInfo.cs
