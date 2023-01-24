@@ -9,7 +9,7 @@ namespace WebTest.Controllers {
         
         [HttpGet]
         public IEnumerable<User> Get() {
-            return DbConnector.GetInstance().GetUsers();
+            return new Service.DbConnector().GetUsers();
         }
     }
 }

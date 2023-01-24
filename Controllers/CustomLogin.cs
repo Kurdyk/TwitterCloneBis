@@ -8,7 +8,7 @@ namespace WebTest.Controllers;
 
 
 [Microsoft.AspNetCore.Components.Route("/login")]
-[ApiController]
+//[ApiController]
 public class CustomLogin : ControllerBase
 {
 
@@ -27,13 +27,13 @@ public class CustomLogin : ControllerBase
     public HttpResponseMessage AttemptLogin() {
         string knownPassword;
         try {
-            knownPassword = DbConnector.GetInstance().GetPassword(email);
+            knownPassword = new Service.DbConnector().GetPassword(email);
         } catch (NullReferenceException exception) {
             return new HttpResponseMessage(HttpStatusCode.NotFound);
         }
 
         if (this.password == knownPassword) {
-            HttpContext.Session.Set("username", Encoding.ASCII.GetBytes(DbConnector.GetInstance().GetUsername(email)));
+            HttpContext.Session.Set("username", Encoding.ASCII.GetBytes(new Service.DbConnector().GetUsername(email)));
             Response.Redirect("/home");
             return new HttpResponseMessage(HttpStatusCode.Accepted);
         }

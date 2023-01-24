@@ -5,20 +5,12 @@ using WebTest.Models;
 namespace WebTest.Service {
     public class DbConnector {
         
-        private static readonly DbConnector Instance = new DbConnector();
         private const string ConnectionString = "Data Source=localhost;Initial Catalog=WebTest;User=louis;Password=";
 
         private static MySqlConnection GetConnection() {
             return new MySqlConnection(ConnectionString);
         }
         
-        private DbConnector() {}
-
-        public static DbConnector GetInstance()
-        {
-            return Instance;
-        }
-
         /**
          * Return the list of all user as a enumeration of User objects 
          */
