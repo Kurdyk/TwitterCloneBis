@@ -1,0 +1,14 @@
+@page "/feed"
+@using Microsoft.AspNetCore.Http
+@model Feed
+
+@{
+    ViewData["title"] = "Feed";
+}
+
+
+<body>
+<div>
+    <p>This is your feed @HttpContext.Session.GetString("username")</p>
+</div>
+</body>

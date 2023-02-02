@@ -1,0 +1,115 @@
+@page "/auth/{pageAction}"
+@model login
+
+@{
+    string PageAction;
+    string strPathAndQuery = HttpContext.Request.Path;
+        if (strPathAndQuery == "/auth/login") {
+            PageAction = "login";
+        }
+        else {
+            PageAction = "register";
+        }
+}
+
+@{
+    ViewData["title"] = PageAction;
+}
+
+<body>
+
+<script type="text/javascript">
+    const page_action = "{{ action | safe }}"
+
+    function onLogin() {
+        const login_action = async () => {
+            document.getElementById('loginError').style.display = 'none';
+            document.getElementById('registerError').style.display = 'none';
+            let form_data = new FormData(document.getElementById('authForm'))
+
+            if ("@PageAction" === "login") {
+                target_url = "/auth/login"
+            } else {
+                target_url = "/auth/register"
+            }
+            const request = await fetch(target_url, {
+                "method": "POST",
+                "body": form_data
+            })
+            if (!request.ok) {
+                if ("@PageAction" === "login" && request.status === 401) {
+                    document.getElementById('loginError').style.display = 'block';
+                } else {
+                    document.getElementById('registerError').style.display = 'block';
+                }
+            }
+            if (request.redirected) {
+                window.location = request.url
+            }
+        }
+        login_action.call()
+    }
+
+
+    window.onload = function () {
+        document.getElementById('loginError').style.display = 'none';
+        document.getElementById('registerError').style.display = 'none';
+        document.getElementById('loginSubmit').onclick = function (_) {
+            onLogin()
+        }
+        var input = document.getElementById("password");
+        input.addEventListener("keypress", function (event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                onLogin()
+            }
+        });
+    }
+
+</script>
+
+<div class="h-100 d-flex align-items-center justify-content-center">
+    <div class="h-100 d-inline-flex flex-column justify-content-center mt-5 shadow mb-5 bg-white rounded">
+        <nav class="nav navbar-custom">
+            <li class="nav-item mx-auto">
+                @if (PageAction == "register") {
+                    <label class="navbar-text"> REGISTER </label>
+                }
+                else {
+                    <label class="navbar-text"> LOGIN </label>
+                }
+            </li>
+        </nav>
+        <div class="d-flex p-3">
+            <form id="authForm">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" name="email" aria-describedby="emailHelp"
+                           placeholder="Enter email" required>
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                        else.</small>
+                </div>
+                @if (PageAction == "register") {
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" name="username" placeholder="Enter username" required>
+                        <small id="usernameHelp" class="form-text text-muted">Choose wisely</small>
+                    </div>
+                }
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input id="password" type="password" class="form-control" name="password" placeholder="Password"
+                           required>
+                </div>
+                <div id="loginError" class="invalid-feedback">
+                    Oops! Invalid username or password.
+                </div>
+                <div id="registerError" class="invalid-feedback">
+                    Oops! That email is already in use.
+                </div>
+            </form>
+        </div>
+        <button class="btn btn-primary m-3" id="loginSubmit" class="btn btn-primary" type="submit">Submit</button>
+    </div>
+</div>
+</body>

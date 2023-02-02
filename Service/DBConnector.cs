@@ -42,7 +42,7 @@ namespace WebTest.Service {
         public string GetPassword(string email) {
             using (MySqlConnection connection = GetConnection()) {
                 connection.Open();
-                var cmd = new MySqlCommand("SELECT password FROM User WHERE email= " + email +";", 
+                var cmd = new MySqlCommand("SELECT password FROM User WHERE email='" + email +"';", 
                     connection);
                 using (MySqlDataReader reader = cmd.ExecuteReader()) {
                     if (reader.Read()) {
@@ -59,7 +59,7 @@ namespace WebTest.Service {
         public string GetUsername(string email) {
             using (MySqlConnection connection = GetConnection()) {
                 connection.Open();
-                var cmd = new MySqlCommand("SELECT username FROM User WHERE email= " + email +";", 
+                var cmd = new MySqlCommand("SELECT username FROM User WHERE email='" + email +"';", 
                     connection);
                 using (MySqlDataReader reader = cmd.ExecuteReader()) {
                     if (reader.Read()) {
@@ -68,6 +68,20 @@ namespace WebTest.Service {
                 }
             }
             throw new NullReferenceException();
+        }
+
+        public void AddUser(User user) {
+            using (MySqlConnection connection = GetConnection()) {
+                connection.Open();
+                var cmd = new MySqlCommand("INSERT INTO User(email, password, username) VALUES (" 
+                                           + user.Email + " " 
+                                           + user.Password + " "
+                                           + user.Username + ");");
+                int affectedRows = cmd.ExecuteNonQuery();
+                if (affectedRows == 0) {
+                    throw new Exception("New user error");
+                }
+            }
         }
     }
 }

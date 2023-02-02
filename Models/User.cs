@@ -5,20 +5,26 @@ namespace WebTest.Models {
 
     public class User {
         //[Key]
-        private int id {get;}
+        public int Id {get;}
         //[Required]
-        private string email {get;}
+        public string Email {get;}
         //[Required]
-        public string username {get; private set;}
+        public string Username {get;}
         //[Required]
-        private string password;
+        public string Password {get;}
 
 
         internal User(int id, string email, string username, string password) {
-            this.id = id;
-            this.email = email;
-            this.username = username;
-            this.password = password;
+            this.Id = id;
+            this.Email = email;
+            this.Username = username;
+            this.Password = password;
+        }
+
+        internal User(string email, string username, string password) {
+            this.Email = email;
+            this.Username = username;
+            this.Password = password;
         }
 
         public override string ToString()

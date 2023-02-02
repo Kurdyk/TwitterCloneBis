@@ -1,44 +1,36 @@
-using System.Net;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
-using MySqlX.XDevAPI;
-using WebTest.Service;
 
 namespace WebTest.Controllers;
 
 
-[Microsoft.AspNetCore.Components.Route("/login")]
-//[ApiController]
+[Route("/auth/login")]
+[ApiController]
 public class CustomLogin : ControllerBase
 {
-
-    private string email;
-    private string password;
 
     /**
      * Instantiate a new Logger to try to log
      */
-    public CustomLogin(string email, string password) {
-        this.email = email;
-        this.password = password;
-    }
+    public CustomLogin() { }
 
     [HttpPost]
-    public HttpResponseMessage AttemptLogin() {
+    public IActionResult AttemptLogin() {
+        var email = Request.Form["email"];
+        var password = Request.Form["password"];
         string knownPassword;
         try {
             knownPassword = new Service.DbConnector().GetPassword(email);
         } catch (NullReferenceException exception) {
-            return new HttpResponseMessage(HttpStatusCode.NotFound);
+            return NotFound();
         }
 
-        if (this.password == knownPassword) {
-            HttpContext.Session.Set("username", Encoding.ASCII.GetBytes(new Service.DbConnector().GetUsername(email)));
-            Response.Redirect("/home");
-            return new HttpResponseMessage(HttpStatusCode.Accepted);
+        if (password == knownPassword) {
+            HttpContext.Session.SetString("username",new Service.DbConnector().GetUsername(email));
+            return RedirectToPage("/home/feed");
         }
-
-        return new HttpResponseMessage(HttpStatusCode.Conflict);
+        
+        return NotFound();
     }
 
 }
