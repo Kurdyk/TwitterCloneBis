@@ -1,23 +1,15 @@
-using System.Data.Common;
 using Microsoft.AspNetCore.Mvc;
-using WebTest.Connector;
 using WebTest.Models;
+using WebTest.Service;
 
-
-namespace WebTest.Controller {
+namespace WebTest.Controllers {
     [Route("/users")]
     [ApiController]
     public class UsersController : ControllerBase {
         
-        private DBConnector dBConnector {get; }
-
-        public UsersController(DBConnector dBConnector) {
-            this.dBConnector = dBConnector;
-        }
-
         [HttpGet]
         public IEnumerable<User> Get() {
-            return this.dBConnector.getUsers();
+            return new Service.DbConnector().GetUsers();
         }
     }
 }

@@ -1,19 +1,23 @@
-using System.Net.Mime;
-using System.Net;
-using System.ComponentModel.Design;
-using WebTest.Connector;
-using System.Runtime.Serialization.Json;
-using System.Text.Json;
-using WebTest.Models;
+using Microsoft.AspNetCore.Mvc;
+using WebTest.Service;
 
-namespace WebTest.main {
-    public class WebTest{
+namespace WebTest {
+    public static class WebTest{
         public static void Main(string[] args) {
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
             builder.Services.AddRazorPages();
-            builder.Services.AddSingleton<DBConnector>();
+            builder.Services.AddControllers();
+            builder.Services.AddSingleton<DbConnector>();
+            builder.Services.AddDistributedMemoryCache();
+
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
 
             var app = builder.Build();
 
@@ -22,18 +26,20 @@ namespace WebTest.main {
             {
                 app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                //app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseSession();
 
             app.UseEndpoints(endpoints => {
                 endpoints.MapRazorPages();
+                endpoints.MapControllers();
             });
 
             app.Run();

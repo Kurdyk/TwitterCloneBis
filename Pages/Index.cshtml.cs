@@ -1,17 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using WebTest.Connector;
 using WebTest.Models;
+using WebTest.Service;
 
 namespace WebTest.Pages {
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
-        private DBConnector DBConnector;
+        private DbConnector DBConnector;
         public IEnumerable<User> users {get; private set;}
 
         public IndexModel(ILogger<IndexModel> logger,
-            DBConnector dBConnector
+            DbConnector dBConnector
         )
         {
             _logger = logger;
@@ -20,7 +20,7 @@ namespace WebTest.Pages {
 
         public void OnGet()
         {
-            this.users = DBConnector.getUsers();
+            this.users = DBConnector.GetUsers();
         }
     }
 }
