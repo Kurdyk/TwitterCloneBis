@@ -22,7 +22,7 @@ public class CustomLogin : ControllerBase
         try {
             knownPassword = new Service.DbConnector().GetPassword(email);
         } catch (NullReferenceException exception) {
-            return NotFound();
+            return new UnauthorizedResult();
         }
 
         if (password == knownPassword) {
@@ -30,7 +30,7 @@ public class CustomLogin : ControllerBase
             return RedirectToPage("/home/feed");
         }
         
-        return NotFound();
+        return new UnauthorizedResult();
     }
 
 }

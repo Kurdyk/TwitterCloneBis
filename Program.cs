@@ -11,6 +11,7 @@ namespace WebTest {
             builder.Services.AddControllers();
             builder.Services.AddSingleton<DbConnector>();
             builder.Services.AddDistributedMemoryCache();
+            builder.Services.AddHttpContextAccessor();
 
             builder.Services.AddSession(options =>
             {

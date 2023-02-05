@@ -31,6 +31,7 @@ namespace WebTest.Service {
                             ));
                     }
                 }
+                conn.Close();
             }
 
             return list;
@@ -49,6 +50,7 @@ namespace WebTest.Service {
                         return reader.GetString("password");
                     }
                 }
+                connection.Close();
             }
             throw new NullReferenceException();
         }
@@ -66,6 +68,7 @@ namespace WebTest.Service {
                         return reader.GetString("username");
                     }
                 }
+                connection.Close();
             }
             throw new NullReferenceException();
         }
@@ -73,10 +76,10 @@ namespace WebTest.Service {
         public void AddUser(User user) {
             using (MySqlConnection connection = GetConnection()) {
                 connection.Open();
-                var cmd = new MySqlCommand("INSERT INTO User(email, password, username) VALUES (" 
-                                           + user.Email + " " 
-                                           + user.Password + " "
-                                           + user.Username + ");");
+                var cmd = new MySqlCommand("INSERT INTO User(email, password, username) VALUES ('" 
+                                           + user.Email + "', '" 
+                                           + user.Password + "', '"
+                                           + user.Username + "');", connection);
                 int affectedRows = cmd.ExecuteNonQuery();
                 if (affectedRows == 0) {
                     throw new Exception("New user error");
