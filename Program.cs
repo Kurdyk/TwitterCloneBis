@@ -11,6 +11,7 @@ namespace WebTest {
             builder.Services.AddControllers();
             builder.Services.AddSingleton<DbConnector>();
             builder.Services.AddDistributedMemoryCache();
+            builder.Services.AddHttpContextAccessor();
 
             builder.Services.AddSession(options =>
             {
@@ -22,11 +23,10 @@ namespace WebTest {
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-            if (!app.Environment.IsDevelopment())
-            {
-                app.UseExceptionHandler("/Error");
+            if (!app.Environment.IsDevelopment()) {
+                app.UseExceptionHandler("/errors/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                //app.UseHsts();
+                app.UseHsts();
             }
 
             //app.UseHttpsRedirection();
