@@ -1,19 +1,8 @@
 @page "/auth/{pageAction}"
-@model login
+@model Login
 
 @{
-    string PageAction;
-    string strPathAndQuery = HttpContext.Request.Path;
-        if (strPathAndQuery == "/auth/login") {
-            PageAction = "login";
-        }
-        else {
-            PageAction = "register";
-        }
-}
-
-@{
-    ViewData["title"] = PageAction;
+    ViewData["title"] = Model.PageAction;
 }
 
 <body>
@@ -27,7 +16,7 @@
             document.getElementById('registerError').style.display = 'none';
             let form_data = new FormData(document.getElementById('authForm'))
 
-            if ("@PageAction" === "login") {
+            if ("@Model.PageAction" === "login") {
                 target_url = "/auth/login"
             } else {
                 target_url = "/auth/register"
@@ -37,7 +26,7 @@
                 "body": form_data
             })
             if (!request.ok) {
-                if ("@PageAction" === "login" && request.status === 401) {
+                if ("@Model.PageAction" === "login" && request.status === 401) {
                     document.getElementById('loginError').style.display = 'block';
                 } else {
                     document.getElementById('registerError').style.display = 'block';
@@ -72,7 +61,7 @@
     <div class="h-100 d-inline-flex flex-column justify-content-center mt-5 shadow mb-5 bg-white rounded">
         <nav class="nav navbar-custom">
             <li class="nav-item mx-auto">
-                @if (PageAction == "register") {
+                @if (Model.PageAction == "register") {
                     <label class="navbar-text"> REGISTER </label>
                 }
                 else {
@@ -89,7 +78,7 @@
                     <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
                         else.</small>
                 </div>
-                @if (PageAction == "register") {
+                @if (Model.PageAction == "register") {
                     <div class="form-group">
                         <label for="username">Username</label>
                         <input type="text" class="form-control" name="username" placeholder="Enter username" required>
