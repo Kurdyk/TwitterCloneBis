@@ -3,16 +3,12 @@ using System.Text.Json;
 
 namespace WebTest.Models {
 
-    public class User {
-        //[Key]
+    public class User : IModel {
         public int Id {get;}
-        //[Required]
-        public string Email {get;}
-        //[Required]
+        
+        internal string Email {get;}
         public string Username {get;}
-        //[Required]
-        public string Password {get;}
-
+        internal string Password { get; }
 
         internal User(int id, string email, string username, string password) {
             this.Id = id;
@@ -27,10 +23,19 @@ namespace WebTest.Models {
             this.Password = password;
         }
 
-        public override string ToString()
-        {
+        internal User(string username) {
+            this.Username = username;
+            this.Id = new Service.DbConnector().GetUserIdFromUsername(username);
+        }
+
+        public override string ToString() {
             return JsonSerializer.Serialize<User>(this);
         }
+        
+        public string Serialize() {
+            return JsonSerializer.Serialize<User>(this);
+        }
+
 
     }
 
